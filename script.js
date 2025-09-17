@@ -33,6 +33,65 @@ const allClass = document.querySelectorAll(".activeButton");
         // console.log(allClass);
 }
 
+const loadWordDetails = async (id) =>{
+    // console.log(id);
+    const url = `https://openapi.programming-hero.com/api/word/${id}`
+    const res = await fetch(url);
+    const details = await res.json();
+    displayWordDetails(details.data);
+}
+
+// {
+//   "status": true,
+//   "message": "successfully fetched a word details",
+//   "data": {
+//     "word": "Eager",
+//     "meaning": "আগ্রহী",
+//     "pronunciation": "ইগার",
+//     "level": 1,
+//     "sentence": "The kids were eager to open their gifts.",
+//     "points": 1,
+//     "partsOfSpeech": "adjective",
+//     "synonyms": [
+//       "enthusiastic",
+//       "excited",
+//       "keen"
+//     ],
+//     "id": 5
+//   }
+// }
+
+const displayWordDetails = (wordData) =>{
+    // console.log(wordData);
+    const modalShow = document.getElementById("my_modal_1");
+
+    const detailsContainer = document.getElementById("modal_Show");
+    detailsContainer.innerHTML = `
+     <div class="space-y-4">
+         <div class="font-bold text-xl">
+            <h2>${wordData.word} ( <i class="fa-solid fa-microphone-lines"></i> : ${wordData.pronunciation})</h2>
+        </div>
+        <div>
+           <h3 class="font-bold">Meaning</h3>
+           <p>${wordData.meaning}</p>
+        </div>
+        <div>
+           <h3 class="font-bold">Example</h3>
+           <p>${wordData.sentence}</p>
+        </div>
+        <div>
+           <h3 class="font-bold">সমার্থক শব্দ গুলো</h3>
+           <button class="border-2 rounded-md p-3 bg-teal-400">${wordData.synonyms[0]? wordData.synonyms[0]:"Not put yet"}</button>
+           <button class="border-2 rounded-md p-3 bg-teal-400">${wordData.synonyms[1]? wordData.synonyms[1]:"Not put yet"}</button>
+           <button class="border-2 rounded-md p-3 bg-teal-400">${wordData.synonyms[2]? wordData.synonyms[2]:"Not put yet"}</button>
+        </div>
+    </div>`;
+    // modalShow.innerHTML = "Hi I am the modal";
+
+     modalShow.showModal();
+
+}
+
 // show words by level function
 const showWords = (words) =>{
     // console.log(words);
@@ -61,7 +120,7 @@ const showWords = (words) =>{
             <h2 class="text-3xl font-bold ">${word.word?word.word : "Word not Found"}</h2>
             <h3 class="text-xl font-medium ">Meaning/Pronounciation</h3>
             <h2 class="text-3xl font-bold text-[#18181B] font-bangla">${word.meaning?word.meaning : "Meaning Not Found"} / ${word.pronunciation?word.pronunciation:"Pronunciation not Found"}</h2>
-            <div class=" flex justify-between mt-5">
+            <div onclick="loadWordDetails(${word.id})" class=" flex justify-between mt-5">
                 <button class=" bg-[#1A91FF1A] p-4 rounded-lg hover:bg-sky-400"><i class="fa-solid fa-circle-info"></i></button>
                 <button class=" bg-[#1A91FF1A] p-4 rounded-lg hover:bg-sky-400"><i class="fa-solid fa-volume-high"></i></button>
             </div>
