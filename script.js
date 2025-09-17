@@ -41,25 +41,6 @@ const loadWordDetails = async (id) =>{
     displayWordDetails(details.data);
 }
 
-// {
-//   "status": true,
-//   "message": "successfully fetched a word details",
-//   "data": {
-//     "word": "Eager",
-//     "meaning": "আগ্রহী",
-//     "pronunciation": "ইগার",
-//     "level": 1,
-//     "sentence": "The kids were eager to open their gifts.",
-//     "points": 1,
-//     "partsOfSpeech": "adjective",
-//     "synonyms": [
-//       "enthusiastic",
-//       "excited",
-//       "keen"
-//     ],
-//     "id": 5
-//   }
-// }
 
 const displayWordDetails = (wordData) =>{
     // console.log(wordData);
@@ -81,7 +62,8 @@ const displayWordDetails = (wordData) =>{
         </div>
         <div>
            <h3 class="font-bold">সমার্থক শব্দ গুলো</h3>
-           <button class="border-2 rounded-md p-3 bg-teal-400">${wordData.synonyms[0]? wordData.synonyms[0]:"Not put yet"}</button>
+
+           <button class="border-2 rounded-md p-3 bg-teal-400">${wordData.synonyms[1]? wordData.synonyms[1]:"Not put yet"}</button>
            <button class="border-2 rounded-md p-3 bg-teal-400">${wordData.synonyms[1]? wordData.synonyms[1]:"Not put yet"}</button>
            <button class="border-2 rounded-md p-3 bg-teal-400">${wordData.synonyms[2]? wordData.synonyms[2]:"Not put yet"}</button>
         </div>
@@ -116,7 +98,7 @@ const showWords = (words) =>{
     // 2.create element
     const perWord = document.createElement("div");
     perWord.innerHTML = `
-      <div class="min-w-[300px] h-[400px] bg-white rounded-lg flex flex-col text-center p-8 gap-8 shadow-lg">
+      <div class="min-w-[100px] h-[400px] bg-white rounded-lg flex flex-col text-center p-8 gap-8 shadow-lg">
             <h2 class="text-3xl font-bold ">${word.word?word.word : "Word not Found"}</h2>
             <h3 class="text-xl font-medium ">Meaning/Pronounciation</h3>
             <h2 class="text-3xl font-bold text-[#18181B] font-bangla">${word.meaning?word.meaning : "Meaning Not Found"} / ${word.pronunciation?word.pronunciation:"Pronunciation not Found"}</h2>
