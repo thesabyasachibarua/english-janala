@@ -10,8 +10,27 @@ function loadLevelWords(level){
     const url = `https://openapi.programming-hero.com/api/level/${level}`;
     fetch(url)
     .then(res => res.json())
-    .then(words => showWords(words.data));
+    .then(words => {
+        const btnActive = document.getElementById(`lesson-btn-${level}`);
+        // remove active
+        removeActive();
 
+        btnActive.classList.add("active");
+        // console.log(btnActive);
+        showWords(words.data)
+    });
+
+}
+
+// function of removeActive button
+
+const removeActive = () =>{
+const allClass = document.querySelectorAll(".activeButton");
+        allClass.forEach(className =>{
+            className.classList.remove("active")
+        })
+        // allClass.classList
+        // console.log(allClass);
 }
 
 // show words by level function
@@ -22,18 +41,29 @@ const showWords = (words) =>{
     // empty the container
     wordContainer.innerHTML = "";
 
+      if(words.length == 0){
+       wordContainer.innerHTML = `
+         <div class="text-center col-span-full my-6">
+            <img class="mx-auto" src="./assets/alert-error.png" alt="">
+            <h3 class="font-bangla text-[14px] text-[#79716B] font-semibold mb-3">এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি।</h3>
+            <h2 class="font-bangla text-[35px] font-bold text-[#292524]">নেক্সট Lesson এ যান</h2>
+        </div>`
+
+
+    }
+
     for(let word of words){
-        console.log(word)
+        // console.log(word)
     // 2.create element
     const perWord = document.createElement("div");
     perWord.innerHTML = `
-      <div class="min-w-[300px] h-[350px] bg-white rounded-lg flex flex-col text-center p-8 gap-8">
-            <h2 class="text-3xl font-bold ">${word.word}</h2>
+      <div class="min-w-[300px] h-[400px] bg-white rounded-lg flex flex-col text-center p-8 gap-8 shadow-lg">
+            <h2 class="text-3xl font-bold ">${word.word?word.word : "Word not Found"}</h2>
             <h3 class="text-xl font-medium ">Meaning/Pronounciation</h3>
-            <h2 class="text-3xl font-bold text-[#18181B] font-bangla">${word.meaning} / ${word.pronunciation}</h2>
-            <div class=" flex justify-between ">
-                <button class=" bg-[#1A91FF1A] p-4 rounded-lg"><i class="fa-solid fa-circle-info"></i></button>
-                <button class=" bg-[#1A91FF1A] p-4 rounded-lg"><i class="fa-solid fa-volume-high"></i></button>
+            <h2 class="text-3xl font-bold text-[#18181B] font-bangla">${word.meaning?word.meaning : "Meaning Not Found"} / ${word.pronunciation?word.pronunciation:"Pronunciation not Found"}</h2>
+            <div class=" flex justify-between mt-5">
+                <button class=" bg-[#1A91FF1A] p-4 rounded-lg hover:bg-sky-400"><i class="fa-solid fa-circle-info"></i></button>
+                <button class=" bg-[#1A91FF1A] p-4 rounded-lg hover:bg-sky-400"><i class="fa-solid fa-volume-high"></i></button>
             </div>
         </div>`
 
@@ -60,7 +90,7 @@ const showLesson = (lessons) => {
         const btnLesson = document.createElement("div");
 
         btnLesson.innerHTML = `
-        <button onclick="loadLevelWords(${items.level_no})" class="btn btn-outline btn-primary"><i class="fa-solid fa-book-open"></i>Lesson - ${items.level_no}</button>`;
+        <button id="lesson-btn-${items.level_no}" onclick="loadLevelWords(${items.level_no})" class="activeButton btn btn-outline btn-primary"><i class="fa-solid fa-book-open"></i>Lesson - ${items.level_no}</button>`;
 
         // 3.append child
 
