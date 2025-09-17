@@ -4,6 +4,17 @@ const loadLesson = () =>{
     .then(json => showLesson(json))
 }
 
+// synonym showing function
+//   <button class="border-2 rounded-md p-3 bg-teal-400">${wordData.synonyms[1]? wordData.synonyms[1]:"Not put yet"}</button>
+
+const getAllSynonyms =(syno) =>{
+    // console.log(syno);
+    const createHTML = syno.map(arr => `<button class="border-2 rounded-md p-3 bg-teal-400">${arr}</button>`);
+
+    const htmlJoin = createHTML.join("");
+    return htmlJoin;
+}
+
 // function for getting words per level
 function loadLevelWords(level){
     // console.log(level);
@@ -62,10 +73,7 @@ const displayWordDetails = (wordData) =>{
         </div>
         <div>
            <h3 class="font-bold">সমার্থক শব্দ গুলো</h3>
-
-           <button class="border-2 rounded-md p-3 bg-teal-400">${wordData.synonyms[1]? wordData.synonyms[1]:"Not put yet"}</button>
-           <button class="border-2 rounded-md p-3 bg-teal-400">${wordData.synonyms[1]? wordData.synonyms[1]:"Not put yet"}</button>
-           <button class="border-2 rounded-md p-3 bg-teal-400">${wordData.synonyms[2]? wordData.synonyms[2]:"Not put yet"}</button>
+            <div class="space-x-3">${getAllSynonyms(wordData.synonyms)}</div>
         </div>
     </div>`;
     // modalShow.innerHTML = "Hi I am the modal";
