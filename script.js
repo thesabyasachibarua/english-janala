@@ -73,7 +73,7 @@ const displayWordDetails = (wordData) =>{
         </div>
         <div>
            <h3 class="font-bold">সমার্থক শব্দ গুলো</h3>
-            <div class="space-x-3">${getAllSynonyms(wordData.synonyms)}</div>
+            <div class="space-x-3 space-y-3">${getAllSynonyms(wordData.synonyms)}</div>
         </div>
     </div>`;
     // modalShow.innerHTML = "Hi I am the modal";
@@ -108,7 +108,7 @@ const showWords = (words) =>{
     perWord.innerHTML = `
       <div class="min-w-[100px] h-[400px] bg-white rounded-lg flex flex-col text-center p-8 gap-8 shadow-lg">
             <h2 class="text-3xl font-bold ">${word.word?word.word : "Word not Found"}</h2>
-            <h3 class="text-xl font-medium ">Meaning/Pronounciation</h3>
+            <h3 class="text-xl font-medium ">Meaning/<br> Pronounciation</h3>
             <h2 class="text-3xl font-bold text-[#18181B] font-bangla">${word.meaning?word.meaning : "Meaning Not Found"} / ${word.pronunciation?word.pronunciation:"Pronunciation not Found"}</h2>
             <div onclick="loadWordDetails(${word.id})" class=" flex justify-between mt-5">
                 <button class=" bg-[#1A91FF1A] p-4 rounded-lg hover:bg-sky-400"><i class="fa-solid fa-circle-info"></i></button>
