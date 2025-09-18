@@ -9,7 +9,7 @@ const loadLesson = () =>{
 
 const getAllSynonyms =(syno) =>{
     // console.log(syno);
-    const createHTML = syno.map(arr => `<button class="border-2 rounded-md p-3 bg-teal-400">${arr}</button>`);
+    const createHTML = syno.map(arr => `<button class=" rounded-md p-3 bg-teal-200">${arr}</button>`);
 
     const htmlJoin = createHTML.join("");
     return htmlJoin;
@@ -17,6 +17,7 @@ const getAllSynonyms =(syno) =>{
 
 // function for getting words per level
 function loadLevelWords(level){
+    manageSpinner(true);
     // console.log(level);
     const url = `https://openapi.programming-hero.com/api/level/${level}`;
     fetch(url)
@@ -98,6 +99,9 @@ const showWords = (words) =>{
             <h2 class="font-bangla text-[35px] font-bold text-[#292524]">নেক্সট Lesson এ যান</h2>
         </div>`
 
+        manageSpinner(false);
+        return;
+
 
     }
 
@@ -106,18 +110,20 @@ const showWords = (words) =>{
     // 2.create element
     const perWord = document.createElement("div");
     perWord.innerHTML = `
-      <div class="min-w-[100px] h-[400px] bg-white rounded-lg flex flex-col text-center p-8 gap-8 shadow-lg">
+      <div class="min-w-[100px] min-h-[400px] bg-white rounded-lg flex flex-col text-center p-8 gap-8 shadow-lg">
             <h2 class="text-3xl font-bold ">${word.word?word.word : "Word not Found"}</h2>
             <h3 class="text-xl font-medium ">Meaning/<br> Pronounciation</h3>
             <h2 class="text-3xl font-bold text-[#18181B] font-bangla">${word.meaning?word.meaning : "Meaning Not Found"} / ${word.pronunciation?word.pronunciation:"Pronunciation not Found"}</h2>
-            <div onclick="loadWordDetails(${word.id})" class=" flex justify-between mt-5">
-                <button class=" bg-[#1A91FF1A] p-4 rounded-lg hover:bg-sky-400"><i class="fa-solid fa-circle-info"></i></button>
+            <div class=" flex justify-between mt-5">
+                <button onclick="loadWordDetails(${word.id})" class=" bg-[#1A91FF1A] p-4 rounded-lg hover:bg-sky-400"><i class="fa-solid fa-circle-info"></i></button>
                 <button class=" bg-[#1A91FF1A] p-4 rounded-lg hover:bg-sky-400"><i class="fa-solid fa-volume-high"></i></button>
             </div>
         </div>`
 
         // 3.append child
         wordContainer.appendChild(perWord);
+
+        manageSpinner(false);
 
 
 }
@@ -149,6 +155,18 @@ const showLesson = (lessons) => {
     // for (let items in lessons){
     //     console.log(items);
     // }
+}
+
+// spinner manage function
+const manageSpinner = (status) =>{
+    if(status === true){
+        document.getElementById("spinner").classList.remove("hidden")
+        document.getElementById("words-container").classList.add("hidden")
+    }
+    else{
+          document.getElementById("words-container").classList.remove("hidden")
+        document.getElementById("spinner").classList.add("hidden")
+    }
 }
 
 loadLesson();
