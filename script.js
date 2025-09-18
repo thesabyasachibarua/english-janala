@@ -169,4 +169,28 @@ const manageSpinner = (status) =>{
     }
 }
 
+// search functionality
+
+document.getElementById("search-btn").addEventListener("click", () =>{
+    // console.log("search button clicked")
+    const inputField = document.getElementById("search-input");
+    const inputValue = inputField.value.trim().toLowerCase();
+    // console.log(inputValue);
+    fetch("https://openapi.programming-hero.com/api/words/all")
+    .then(res => res.json())
+    .then(data => {
+        const allWords = data.data;
+        const filterWords = allWords.filter(word =>{
+        const newAdd = word.word;
+       return newAdd.toLowerCase().includes(inputValue);
+        });
+        // console.log(filterWords);
+        showWords(filterWords);
+
+        
+    });
+
+})
+
+
 loadLesson();
