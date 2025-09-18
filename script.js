@@ -116,7 +116,7 @@ const showWords = (words) =>{
             <h2 class="text-3xl font-bold text-[#18181B] font-bangla">${word.meaning?word.meaning : "Meaning Not Found"} / ${word.pronunciation?word.pronunciation:"Pronunciation not Found"}</h2>
             <div class=" flex justify-between mt-5">
                 <button onclick="loadWordDetails(${word.id})" class=" bg-[#1A91FF1A] p-4 rounded-lg hover:bg-sky-400"><i class="fa-solid fa-circle-info"></i></button>
-                <button class=" bg-[#1A91FF1A] p-4 rounded-lg hover:bg-sky-400"><i class="fa-solid fa-volume-high"></i></button>
+                <button onclick="pronounceWord('${word.word}')" class=" bg-[#1A91FF1A] p-4 rounded-lg hover:bg-sky-400"><i class="fa-solid fa-volume-high"></i></button>
             </div>
         </div>`
 
@@ -185,12 +185,22 @@ document.getElementById("search-btn").addEventListener("click", () =>{
        return newAdd.toLowerCase().includes(inputValue);
         });
         // console.log(filterWords);
+        removeActive()
         showWords(filterWords);
 
         
     });
 
 })
+
+// speech functionality to the words
+
+function pronounceWord(word) {
+    // console.log(word);
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-EN"; // English
+  window.speechSynthesis.speak(utterance);
+}
 
 
 loadLesson();
